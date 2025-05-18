@@ -26,6 +26,39 @@ def trading_server(ticker: str) -> str:
     print(f"{Fore.YELLOW}{close_data}")
     return str(f"Stock price over the last month for {ticker}: {close_data}")
 
+@mcp.tools()
+def stock_info(ticker: str) -> str:
+    """This tool returns information about a given stock given it's ticker.
+    Args:
+        stock_ticker: a alphanumeric stock ticker
+        Example payload: "IBM"
+
+    Returns:
+        str:information about the company
+        Example Respnse "Background information for IBM: {'address1': 'One New Orchard Road', 'city': 'Armonk', 'state': 'NY', 'zip': '10504', 'country': 'United States', 'phone': '914 499 1900', 'website': 
+            'https://www.ibm.com', 'industry': 'Information Technology Services',... }" 
+    """
+    dat = yf.Ticker(ticker)
+    return f"Background information for {ticker}: {dat.info}"
+
+@mcp.tool()
+def income_statement(ticker:str) -> str:
+    """This tool returns the quarterly income statement for a given stock ticker.
+    Args:
+        stock_ticker: a alphanumeric stock ticker
+        Example payload: "BOA"
+
+    Returns:
+        str:quarterly income statement for the company
+        Example Respnse "Income statement for BOA: 
+        Tax Effect Of Unusual Items                           76923472.474289  ...          NaN
+        Tax Rate For Calcs                                            0.11464  ...          NaN
+        Normalized EBITDA                                        4172000000.0  ...          NaN
+    """
+    
+    dat = yf.ticker(ticker)
+
+    return f"Background info for {ticker}: {dat.quarterly_income_stmt}"
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
