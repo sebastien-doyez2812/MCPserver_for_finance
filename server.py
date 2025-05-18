@@ -26,7 +26,7 @@ def trading_server(ticker: str) -> str:
     print(f"{Fore.YELLOW}{close_data}")
     return str(f"Stock price over the last month for {ticker}: {close_data}")
 
-@mcp.tools()
+@mcp.tool()
 def stock_info(ticker: str) -> str:
     """This tool returns information about a given stock given it's ticker.
     Args:
@@ -60,5 +60,21 @@ def income_statement(ticker:str) -> str:
 
     return f"Background info for {ticker}: {dat.quarterly_income_stmt}"
 
+
+@mcp.prompt()
+def stock_summary(ticker: str) -> str:
+    """ This prompt returns a summary of a given stock ticker.
+    Args:
+        ticker: a alphanumeric stock ticker
+        Example payload: "NVDA"
+
+    Returns:
+        str:summary of the stock ticker
+    """
+    return """
+    You are a financial analyst.
+    You are given a stock ticker.
+    You need to return the last known price for the stock ticker.
+    """
 if __name__ == "__main__":
     mcp.run(transport="stdio")
